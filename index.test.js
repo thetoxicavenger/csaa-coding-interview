@@ -10,15 +10,14 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000;
 
 describe('Promise Basics 💾', function () {
   test('1. calling the first parameter passed to a Promise should resolve the promise', () => {
-    const promise = new Promise(() => {
+    const promise = new Promise((resolve) => {
+      resolve()
     });
-
-    return promise;
   });
 
   test('2. the `resolve` function can return a value, that is consumed by the `promise.then()` callback', () => {
-    const promise = new Promise(() => {
-      // code here
+    const promise = new Promise((resolve, reject) => {
+      resolve('nice')
     });
 
     return promise
@@ -28,8 +27,8 @@ describe('Promise Basics 💾', function () {
   });
 
   test('3. the `reject` function can return a value, that is consumed by the `promise.catch()` callback', () => {
-    const promise = new Promise(() => {
-      // Code here
+    const promise = new Promise((resolve, reject) => {
+      reject('not so nice')
     });
 
     return promise
@@ -39,8 +38,10 @@ describe('Promise Basics 💾', function () {
   });
 
   test('4. an asynchronous promise can resolve at a later time', () => {
-    const promise = new Promise(() => {
-      return setTimeout(() => { /*Code here*/ }, 500);
+    const promise = new Promise((resolve) => {
+      return setTimeout(() => { 
+        resolve('async')
+      }, 500);
     });
 
     return promise
@@ -52,8 +53,8 @@ describe('Promise Basics 💾', function () {
   test('5. You can also nest promises, resolving/rejecting the same as above', () => {
     const innerPromise = new Promise(resolve => resolve('inner promise!'));
 
-    const promise = new Promise(() => {
-      // code here
+    const promise = new Promise((resolve) => {
+      resolve(innerPromise)
     });
 
     return promise
